@@ -1,0 +1,2 @@
+build --features=apple.codesign_frameworks_without_provisioning_profile
+build --@build_bazel_rules_apple//apple/build_settings:use_tree_artifacts_outputs=True

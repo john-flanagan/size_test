@@ -1,0 +1,35 @@
+load("@build_bazel_rules_swift//swift:swift_library.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_framework")
+load("def_tests.bzl", "def_tests")
+
+swift_library(
+    name = "MyLibrary",
+    data = ["data.bin"],
+    srcs = ["main.swift"],
+    tags = ["manual"],
+)
+
+ios_framework(
+    name = "MyFramework",
+    resources = [],
+    bundle_id = "com.size_test.framework",
+    families = ["iphone"],
+    infoplists = ["Info.plist"],
+    minimum_os_version = '17.0', 
+    tags = ["manual"],
+    deps = ["MyLibrary"],
+)
+
+swift_library(
+    name = "MyTest",
+    srcs = ["test.swift"],
+    tags = ["manual"],
+    testonly = True,
+    deps = ["MyLibrary"],
+)
+
+def_tests(
+    count = 50,
+    frameworks = ["MyFramework"],
+    deps = ["MyTest"],
+)
