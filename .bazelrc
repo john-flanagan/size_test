@@ -1,2 +1,10 @@
 build --features=apple.codesign_frameworks_without_provisioning_profile
 build --@build_bazel_rules_apple//apple/build_settings:use_tree_artifacts_outputs=True
+
+startup --digest_function=blake3
+common --cache_computed_file_digests=500000
+
+common --noworker_sandboxing
+common --spawn_strategy=remote,worker,local
+
+common --disk_cache=~/bazel_disk_cache_test
